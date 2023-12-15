@@ -36,8 +36,14 @@ class Formcontroller extends Controller
 
     public function submitForm(Request $request)
     {
-        //dd($request->all());
+        //dd(with('success', 'Formulir berhasil dikirim!'));
         penawaran_harga::create($request->except('_token'));
-        return redirect()->back()->with('success', 'Formulir berhasil dikirim!');
+        try {
+            // Your form submission logic here
+    
+            return response()->json(['success' => 'Pesanan diproses!']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Terjadi kesalahan. Silakan coba lagi.'], 500);
+        }
     }
 }

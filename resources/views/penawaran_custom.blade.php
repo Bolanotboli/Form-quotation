@@ -60,11 +60,11 @@
 
     </header>
     
-    <a href="/">
+    <a href="/dashboard">
         <br>
-            <img src="https://cdn-icons-png.flaticon.com/512/10079/10079366.png" alt="Home" style="height: 15px; width: auto;"/>  
-            <font color="black"> HOME </font>
-        </a>
+        <img src="https://cdn-icons-png.flaticon.com/512/10079/10079366.png" alt="Home" style="height: 15px; width: auto;"/>  
+        <font color="black"> HOME </font>
+    </a>
         <font color="black"> <strong> > </strong></font>
         <font color="#808080"> <strong> Quotation </strong></font>
 
@@ -104,9 +104,9 @@
         <label for="layanan"><strong>Layanan yang anda inginkan</strong> (<font color="red">silahkan pilih</font>)</label>
         <br>
         <select id="layanan" name="layanan">
-            <option value="layanan1">Layanan 1</option>
-            <option value="layanan2">Layanan 2</option>
-            <option value="layanan3">Layanan 3</option>
+            <option value="layanan1">Penjemputan</option>
+            <option value="layanan2">Hot Meal</option>
+            <option value="layanan3">Lain-lain</option>
             <!-- Tambahkan opsi lainnya sesuai kebutuhan -->
         </select>
 
@@ -115,9 +115,9 @@
         <label for="budget"><strong>Estimasi budget / anggaran dana yang dialokasikan</strong> (<font color="red">silahkan pilih</font>)</label>
         <br>
         <select id="budget" name="budget">
-            <option value="budget1">budget 1</option>
-            <option value="budget2">budget 2</option>
-            <option value="budget3">budget 3</option>
+            <option value="budget1">1 - 2 juta</option>
+            <option value="budget2">5 - 9 ratus</option>
+            <option value="budget3">Lain-lain</option>
             <!-- Tambahkan opsi lainnya sesuai kebutuhan -->
         </select>
 
@@ -126,9 +126,9 @@
         <label for="feedback"><strong>Darimana anda mengetahui kami?</strong> (<font color="red">silahkan pilih</font>)</label>
         <br>
         <select id="feedback" name="feedback">
-            <option value="feedback1">feedback 1</option>
-            <option value="feedback2">feedback 2</option>
-            <option value="feedback3">feedback 3</option>
+            <option value="feedback1">Instagram</option>
+            <option value="feedback2">Facebook</option>
+            <option value="feedback3">Twitter</option>
             <!-- Tambahkan opsi lainnya sesuai kebutuhan -->
         </select>
 
@@ -138,9 +138,42 @@
         <br>
         <textarea id="deskripsi" name="deskripsi"></textarea>
 
+        <!-- jQuery dari CDN -->
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                // Fungsi untuk menangani pengiriman formulir
+                $('form').submit(function (e) {
+                    e.preventDefault(); // Mencegah pengiriman formulir default
+
+                    // Menggunakan AJAX untuk mengirim formulir tanpa mereload halaman
+                    $.ajax({
+                        type: 'POST',
+                        url: '/form/submit_form', // Sesuaikan dengan URL pengiriman formulir Anda
+                        data: $(this).serialize(), // Mengambil data formulir
+                        success: function (response) {
+                            // Menampilkan notifikasi sukses di dalam elemen dengan ID 'notification'
+                            $('#notification').html('<div class="alert alert-success">' + response.success + '</div>');
+                            // Mengosongkan formulir
+                            $('form')[0].reset();
+                        },
+                        error: function (error) {
+                            // Menampilkan pesan kesalahan di dalam elemen dengan ID 'notification'
+                            $('#notification').html('<div class="alert alert-danger">' + response.error + '</div>');
+                            // Mengosongkan formulir
+                            $('form')[0].reset();
+                        }
+                    });
+                    return false;
+                });
+            });
+        </script>
+
         <p>
 
         <button type="submit">Kirim</button>
+        <div id="notification"></div>
     </form>
-
+    
 </body>
+</html>
